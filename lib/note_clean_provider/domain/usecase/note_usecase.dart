@@ -9,8 +9,8 @@ class NoteUseCase extends NoteRepository{
   NoteUseCase(this._repository);
 
   @override
-  Future getNotes() {
-    return _repository.getNotes();
+  Future getNotes(String? searchQuery) {
+    return _repository.getNotes(searchQuery);
   }
 
   @override

@@ -36,12 +36,12 @@ class CustomDialog extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            MyOutlinedTextField(controller: titleController, hint: "Add title"),
+            MyOutlinedTextField(controller: titleController, labelText: "Add title"),
             const SizedBox(
               height: 10,
             ),
             MyOutlinedTextField(
-                controller: contentController, hint: "Add Content"),
+                controller: contentController, labelText: "Add Content"),
             const Spacer(),
             Container(
               height: 56,

@@ -18,15 +18,34 @@ class AppDatabase {
   }
 
   //************************  Note Db Methods  **************************//
-  Future<List<Note>> getNotes() async {
-    _notesBox = await Hive.openBox<Note>("notes");
-    return _notesBox.values.toList();
+
+
+     /************* get list **************/
+  // Future<List<Note>> getNotes() async {
+  //   _notesBox = await Hive.openBox<Note>('notes');
+  //   return _notesBox.values.toList();
+  // }
+
+
+  /************* get list and search **************/
+  Future<List<Note>> getNotes({String? searchQuery}) async {
+    _notesBox = await Hive.openBox<Note>('notes');
+
+    if (searchQuery != null && searchQuery.trim().isNotEmpty) {
+      // Perform a query search if searchQuery is provided
+      return _notesBox.values.where((note) {
+        return note.title.toLowerCase().contains(searchQuery.toLowerCase()) ||
+            note.content.toLowerCase().contains(searchQuery.toLowerCase());
+      }).toList();
+    } else {
+      return _notesBox.values.toList();
+    }
   }
 
+
+
   Future<void> addOrUpdateNote(Note note) async {
-
-    _notesBox = await Hive.openBox<Note>("notes");
-
+    _notesBox = await Hive.openBox<Note>('notes');
     if (note.key == null) {
       await _notesBox.add(note); // add
     } else {
@@ -35,15 +54,19 @@ class AppDatabase {
   }
 
   Future<void> deleteNote(Note note) async {
-    _notesBox = await Hive.openBox<Note>("notes");
+    _notesBox = await Hive.openBox<Note>('notes');
     if (note.key != null) {
       await _notesBox.delete(note.key);
     }
   }
 
   Future<void> clearNoteDb() async {
+    _notesBox = await Hive.openBox<Note>('notes');
     await _notesBox.clear();
+    await _notesBox.compact();
   }
+
+
 
 
 //************************  Contact Db Methods  **************************//

@@ -12,13 +12,13 @@ class NoteViewModel extends ChangeNotifier {
 
   List<Note> get list => _list;
 
-
-  void initDB() {
-    _useCase.clearDB();
-  }
+  // void initDB() {
+  //   _useCase.();
+  //   getNotes();
+  // }
 
   Future<dynamic> getNotes() async {
-    _list = await _useCase.getNotes();
+    _list = await _useCase.getNotes(null);
     notifyListeners();
   }
 
@@ -34,5 +34,12 @@ class NoteViewModel extends ChangeNotifier {
 
   void clearDB() {
     _useCase.clearDB();
+    _list = [];
+    notifyListeners();
+  }
+
+  Future<dynamic> searchInDb(searchQuery) async {
+    _list = await _useCase.getNotes(searchQuery);
+    notifyListeners();
   }
 }

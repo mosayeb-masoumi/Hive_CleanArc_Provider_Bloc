@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_clean_provider_bloc/core/components/outlined_textfield.dart';
+import 'package:hive_clean_provider_bloc/note_clean_provider/presentation/note_view_model.dart';
+import 'package:provider/provider.dart';
 
 class BottomSheetComponent extends StatelessWidget {
   final Function callback;
@@ -24,17 +26,18 @@ class BottomSheetComponent extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          MyOutlinedTextField(controller: titleController, hint: "Add title"),
+          MyOutlinedTextField(
+              controller: titleController, labelText: "Add title"),
           const SizedBox(
             height: 10,
           ),
           MyOutlinedTextField(
-              controller: contentController, hint: "Add Content"),
+              controller: contentController, labelText: "Add Content"),
           const Spacer(),
           Container(
             width: size.width,
             height: 56,
-            margin:const  EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

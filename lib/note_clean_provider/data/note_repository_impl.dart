@@ -19,8 +19,8 @@ class NoteRepositoryImpl extends NoteRepository {
   }
 
   @override
-  Future getNotes() async {
-    return _db.getNotes();
+  Future getNotes(String? searchQuery) async {
+    return _db.getNotes(searchQuery: searchQuery);
   }
 
 

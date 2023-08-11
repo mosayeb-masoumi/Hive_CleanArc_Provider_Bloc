@@ -13,3 +13,5 @@ class Note extends HiveObject{
 
   Note({required this.title, required this.content});
 }
+// first add   part 'note.g.dart';
+// then run this command in terminal: "flutter packages pub run build_runner build"

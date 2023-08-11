@@ -27,6 +27,12 @@ class _NoteHiveCleanArcProviderState extends State<NoteHiveCleanArcProvider> {
     getNotes();
   }
 
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   void getNotes() {
     context.read<NoteViewModel>().getNotes();
   }

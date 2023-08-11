@@ -1,10 +1,12 @@
 import 'package:hive/hive.dart';
+import 'package:hive_clean_provider_bloc/contact_clean_bloc/domain/entity/contact.dart';
 
 import '../../note_clean_provider/domain/entity/note/note.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class AppDatabase {
   late Box<Note> _notesBox;
+  late Box<Contact> _contactsBox;
 
   Future<void> init() async {
     final appDocumentDirectory = await path_provider.getApplicationDocumentsDirectory();
@@ -12,6 +14,7 @@ class AppDatabase {
 
     // register table note
     Hive.registerAdapter(NoteAdapter());
+    Hive.registerAdapter(ContactAdapter());
 
     // _notesBox = await Hive.openBox<Note>('notes');
     // register table contact
@@ -69,6 +72,56 @@ class AppDatabase {
 
 
 
+
+
+
+
 //************************  Contact Db Methods  **************************//
+
+  /************* get list **************/
+  // Future<List<Contact>> getContacts() async {
+  //   _contactsBox = await Hive.openBox<Contact>('contacts');
+  //   return _contactsBox.values.toList();
+  // }
+
+
+  /************* get list and search **************/
+  Future<List<Contact>> getContacts({String? searchQuery}) async {
+    _contactsBox = await Hive.openBox<Contact>('contacts');
+
+    if (searchQuery != null && searchQuery.trim().isNotEmpty) {
+      // Perform a query search if searchQuery is provided
+      return _contactsBox.values.where((contact) {
+        return contact.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
+            contact.phone.toString().toLowerCase().contains(searchQuery.toLowerCase());
+      }).toList();
+    } else {
+      return _contactsBox.values.toList();
+    }
+  }
+
+
+
+  Future<void> addOrUpdateContact(Contact contact) async {
+    _contactsBox = await Hive.openBox<Contact>('contacts');
+    if (contact.key == null) {
+      await _contactsBox.add(contact); // add
+    } else {
+      await contact.save();  // update
+    }
+  }
+
+  Future<void> deleteContact(Contact contact) async {
+    _contactsBox = await Hive.openBox<Contact>('contacts');
+    if (contact.key != null) {
+      await _contactsBox.delete(contact.key);
+    }
+  }
+
+  Future<void> clearContactDb() async {
+    _contactsBox = await Hive.openBox<Contact>('contacts');
+    await _contactsBox.clear();
+    await _contactsBox.compact();
+  }
 
 }

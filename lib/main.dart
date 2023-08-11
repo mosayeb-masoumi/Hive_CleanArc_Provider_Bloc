@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_clean_provider_bloc/contact_clean_bloc/presentation/contact_screen/contact_screen.dart';
 import 'package:hive_clean_provider_bloc/core/db/app_database.dart';
 import 'package:hive_clean_provider_bloc/di.dart';
 import 'package:hive_clean_provider_bloc/note_clean_provider/presentation/note_view_model.dart';
@@ -48,7 +49,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const NoteHiveCleanArcProvider(),
+      // home: const NoteHiveCleanArcProvider(),
+      home: const ContactScreen(),
       // home: const TestClasss(),
     );
   }

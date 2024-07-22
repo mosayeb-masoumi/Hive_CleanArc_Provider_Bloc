@@ -32,7 +32,11 @@ class AppDatabase {
 
   /************* get list and search **************/
   Future<List<Note>> getNotes({String? searchQuery}) async {
-    _notesBox = await Hive.openBox<Note>('notes');
+
+    if(!Hive.isBoxOpen('notes')){
+      _notesBox = await Hive.openBox<Note>('notes');
+    }
+    // _notesBox = await Hive.openBox<Note>('notes');
 
     if (searchQuery != null && searchQuery.trim().isNotEmpty) {
       // Perform a query search if searchQuery is provided
@@ -48,7 +52,10 @@ class AppDatabase {
 
 
   Future<void> addOrUpdateNote(Note note) async {
-    _notesBox = await Hive.openBox<Note>('notes');
+    if(!Hive.isBoxOpen('notes')){
+      _notesBox = await Hive.openBox<Note>('notes');
+    }
+    // _notesBox = await Hive.openBox<Note>('notes');
     if (note.key == null) {
       await _notesBox.add(note); // add
     } else {
@@ -57,14 +64,20 @@ class AppDatabase {
   }
 
   Future<void> deleteNote(Note note) async {
-    _notesBox = await Hive.openBox<Note>('notes');
+    if(!Hive.isBoxOpen('notes')){
+      _notesBox = await Hive.openBox<Note>('notes');
+    }
+    // _notesBox = await Hive.openBox<Note>('notes');
     if (note.key != null) {
       await _notesBox.delete(note.key);
     }
   }
 
   Future<void> clearNoteDb() async {
-    _notesBox = await Hive.openBox<Note>('notes');
+    if(!Hive.isBoxOpen('notes')){
+      _notesBox = await Hive.openBox<Note>('notes');
+    }
+    // _notesBox = await Hive.openBox<Note>('notes');
     await _notesBox.clear();
     await _notesBox.compact();
   }
@@ -87,7 +100,10 @@ class AppDatabase {
 
   /************* get list and search **************/
   Future<List<Contact>> getContacts({String? searchQuery}) async {
-    _contactsBox = await Hive.openBox<Contact>('contacts');
+    if(!Hive.isBoxOpen('contacts')){
+      _contactsBox = await Hive.openBox<Contact>('contacts');
+    }
+    // _contactsBox = await Hive.openBox<Contact>('contacts');
 
     if (searchQuery != null && searchQuery.trim().isNotEmpty) {
       // Perform a query search if searchQuery is provided
@@ -103,7 +119,10 @@ class AppDatabase {
 
 
   Future<void> addOrUpdateContact(Contact contact) async {
-    _contactsBox = await Hive.openBox<Contact>('contacts');
+    if(!Hive.isBoxOpen('contacts')){
+      _contactsBox = await Hive.openBox<Contact>('contacts');
+    }
+    // _contactsBox = await Hive.openBox<Contact>('contacts');
     if (contact.key == null) {
       await _contactsBox.add(contact); // add
     } else {
@@ -112,14 +131,20 @@ class AppDatabase {
   }
 
   Future<void> deleteContact(Contact contact) async {
-    _contactsBox = await Hive.openBox<Contact>('contacts');
+    if(!Hive.isBoxOpen('contacts')){
+      _contactsBox = await Hive.openBox<Contact>('contacts');
+    }
+    // _contactsBox = await Hive.openBox<Contact>('contacts');
     if (contact.key != null) {
       await _contactsBox.delete(contact.key);
     }
   }
 
   Future<void> clearContactDb() async {
-    _contactsBox = await Hive.openBox<Contact>('contacts');
+    if(!Hive.isBoxOpen('contacts')){
+      _contactsBox = await Hive.openBox<Contact>('contacts');
+    }
+    // _contactsBox = await Hive.openBox<Contact>('contacts');
     await _contactsBox.clear();
     await _contactsBox.compact();
   }
